@@ -6,105 +6,197 @@
     <title>Student Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/CSS/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
-    <div class="bg-orb orb1"></div>
-    <div class="bg-orb orb2"></div>
+    <!-- NOISE TEXTURE OVERLAY -->
+    <div class="noise"></div>
 
-    <div class="container">
+    <!-- ANIMATED BACKGROUND -->
+    <div class="bg-wrap">
+        <div class="grid-lines"></div>
+    </div>
 
-        <!-- PROFILE HERO -->
-        <div class="hero-card">
-            <div class="hero-glow"></div>
-            <div class="avatar-wrap">
-                <img
-                    src="https://api.dicebear.com/8.x/notionists/svg?seed=Bryant&backgroundColor=b6e3f4"
-                    alt="Student Photo"
-                    class="avatar-img"
-                />
-                <span class="avatar-badge">✦</span>
-            </div>
-            <div class="hero-info">
-                <p class="hero-label">Student Profile</p>
-                <h1 th:text="${student.name}">Bryant</h1>
-                <div class="hero-meta">
-                    <span class="chip chip-nim" th:text="${student.nim}">2086022510003</span>
-                    <span class="chip chip-major" th:text="${student.major}">FullStack Development</span>
-                </div>
-            </div>
+    <!-- NAV -->
+    <nav class="topnav">
+        <span class="nav-logo">SP</span>
+        <div class="nav-links">
+            <a href="#hero">Profile</a>
+            <a href="#about">About</a>
+            <a href="#courses">Courses</a>
+            <a href="#hobbies">Hobbies</a>
         </div>
+        <span class="nav-year" th:text="${#temporals.year(#temporals.createNow())}">2025</span>
+    </nav>
 
-        <!-- GRID LAYOUT -->
-        <div class="grid-two">
+    <main class="page">
 
-            <!-- ABOUT ME -->
-            <div class="card about-card">
-                <div class="card-header">
-                    <span class="card-icon">◈</span>
-                    <h2>About Me</h2>
+        <!-- ═══ HERO ═══ -->
+        <section class="hero-section" id="hero">
+            <div class="hero-left">
+                <p class="eyebrow">Universitas Ciputra Makassar</p>
+                <h1 class="hero-name" th:text="${student.name}">Bryant</h1>
+                <div class="hero-tags">
+                    <span class="htag htag-id" th:text="${student.nim}">2086022510003</span>
+                    <span class="htag htag-course" th:text="${student.major}">FullStack Development</span>
                 </div>
-                <p class="bio-text" th:text="${student.bio}">
-                    I am a Second-semester FullStack Development student. I enjoy building web applications.
-                    Outside of class, I like reading, playing chess, and swimming.
+                <p class="hero-summary" th:text="${student.bio}">
+                    Second-semester student passionate about building the web.
                 </p>
-            </div>
-
-            <!-- HOBBIES -->
-            <div class="card hobbies-card">
-                <div class="card-header">
-                    <span class="card-icon">◉</span>
-                    <h2>Hobbies</h2>
+                <div class="hero-stats">
+                    <div class="hstat">
+                        <span class="hstat-num" th:text="${#lists.size(courses)}">4</span>
+                        <span class="hstat-lbl">Courses</span>
+                    </div>
+                    <div class="hstat-div"></div>
+                    <div class="hstat">
+                        <span class="hstat-num" th:text="${#lists.size(hobbies)}">3</span>
+                        <span class="hstat-lbl">Hobbies</span>
+                    </div>
+                    <div class="hstat-div"></div>
+                    <div class="hstat">
+                        <span class="hstat-num">2</span>
+                        <span class="hstat-lbl">Semester</span>
+                    </div>
                 </div>
-                <div class="hobbies-list">
-                    <span class="hobby-tag" th:each="hobby : ${hobbies}" th:text="${hobby}">Hobby</span>
+            </div>
+            <div class="hero-right">
+                <div class="avatar-frame">
+                    <div class="avatar-ring r1"></div>
+                    <div class="avatar-ring r2"></div>
+                    <div class="avatar-ring r3"></div>
+                    <img
+                        src="https://api.dicebear.com/8.x/notionists/svg?seed=Bryant&backgroundColor=1a1a2e"
+                        alt="Student Photo"
+                        class="avatar-img"
+                    />
+                    <div class="avatar-status">
+                        <span class="status-dot"></span>
+                        Active
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- COURSES TABLE -->
-        <div class="card courses-card">
-            <div class="card-header">
-                <span class="card-icon">▦</span>
-                <h2>Current Courses</h2>
-                <span class="course-count" th:text="${#lists.size(courses)} + ' Courses'">4 Courses</span>
-            </div>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Code</th>
-                            <th>Credits</th>
-                            <th>Grade</th>
-                            <th>GPA Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="course : ${courses}">
-                            <td class="course-name" th:text="${course.name}">Course</td>
-                            <td><span class="code-badge" th:text="${course.code}">IK0000</span></td>
-                            <td th:text="${course.credits}">3</td>
-                            <td>
-                                <span class="grade-pill"
-                                    th:text="${course.grade}"
-                                    th:classappend="${course.grade == 'A'} ? 'grade-a' : (${course.grade == 'B+'} ? 'grade-bplus' : 'grade-b')">
-                                    B
-                                </span>
-                            </td>
-                            <td th:text="${#numbers.formatDecimal(course.gpaPoints, 1, 1)}">3.0</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <!-- ═══ ABOUT + HOBBIES ═══ -->
+        <section class="two-col" id="about">
 
-        <footer>
-            <p>Universitas Ciputra Makassar &nbsp;·&nbsp; <span th:text="${#temporals.year(#temporals.createNow())}">2025</span></p>
+            <!-- ABOUT CARD with Toggle -->
+            <div class="card card-about">
+                <input type="checkbox" id="chkAbout" class="chk" />
+                <div class="card-top">
+                    <div class="card-label">
+                        <span class="card-num">01</span>
+                        <h2>About Me</h2>
+                    </div>
+                    <label for="chkAbout" class="pill-btn">
+                        <span class="txt-open">Collapse ↑</span>
+                        <span class="txt-closed">Expand ↓</span>
+                    </label>
+                </div>
+                <div class="card-body collapsible">
+                    <p class="bio" th:text="${student.bio}">
+                    </p>
+                    <div class="info-rows">
+                        <div class="info-row">
+                            <span class="ir-label">NIM</span>
+                            <span class="ir-val" th:text="${student.nim}">2086022510003</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="ir-label">Program</span>
+                            <span class="ir-val" th:text="${student.major}">FullStack Development</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="ir-label">University</span>
+                            <span class="ir-val">Universitas Ciputra Makassar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOBBIES CARD -->
+            <div class="card card-hobbies" id="hobbies">
+                <div class="card-top">
+                    <div class="card-label">
+                        <span class="card-num">02</span>
+                        <h2>Hobbies</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="hobby-grid">
+                        <label class="hobby-item" th:each="hobby,iter : ${hobbies}">
+                            <input type="checkbox" class="hobby-chk" />
+                            <span class="hobby-box">
+                                <span class="hobby-check">✓</span>
+                                <span class="hobby-name" th:text="${hobby}">Hobby</span>
+                            </span>
+                        </label>
+                    </div>
+                    <p class="hobby-hint">Click to mark as favourite</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ COURSES ═══ -->
+        <section class="card card-courses" id="courses">
+            <input type="checkbox" id="chkCourses" class="chk" />
+            <div class="card-top">
+                <div class="card-label">
+                    <span class="card-num">03</span>
+                    <h2>Current Courses</h2>
+                </div>
+                <div class="course-right">
+                    <span class="badge-count" th:text="${#lists.size(courses)} + ' enrolled'">4 enrolled</span>
+                    <label for="chkCourses" class="pill-btn">
+                        <span class="txt-open">Collapse ↑</span>
+                        <span class="txt-closed">Expand ↓</span>
+                    </label>
+                </div>
+            </div>
+            <div class="card-body collapsible">
+                <div class="table-scroll">
+                    <table class="course-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Name</th>
+                                <th>Code</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                                <th>GPA Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="course,iter : ${courses}" class="course-row">
+                                <td class="row-num" th:text="${iter.count}">1</td>
+                                <td class="course-name" th:text="${course.name}">Course</td>
+                                <td><span class="mono-badge" th:text="${course.code}"></span></td>
+                                <td th:text="${course.credits}">3</td>
+                                <td>
+                                    <span class="grade-tag"
+                                        th:text="${course.grade}"
+                                        th:classappend="${course.grade == 'A'} ? ' g-a' : (${course.grade == 'B+'} ? ' g-bp' : ' g-b')">
+                                        B
+                                    </span>
+                                </td>
+                                <td class="gpa-val" th:text="${#numbers.formatDecimal(course.gpaPoints, 1, 1)}">3.44</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <span>Universitas Ciputra Makassar</span>
+            <span class="footer-dot">·</span>
+            <span th:text="${#temporals.year(#temporals.createNow())}">2026</span>
         </footer>
 
-    </div>
+    </main>
+
 </body>
 </html>

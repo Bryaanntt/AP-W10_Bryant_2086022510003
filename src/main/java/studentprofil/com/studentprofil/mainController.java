@@ -18,14 +18,14 @@ public class mainController {
             "FullStack Development - Universitas Ciputra Makassar",
             "I am a Second-semester FullStack Development student. " +
             "I enjoy building web applications. " +
-            "Outside of class, I like reading, playing chess, and swimming."
+            "Outside of class, I like playing online games, playing chess, and swimming."
         );
 
         List<Course> courses = List.of(
-            new Course("Advance Progamming", "R501", 3, "B"),
-            new Course("Database", "R502", 3, "A-"),
-            new Course("Struktur Data", "R508", 3, "+"),
-            new Course("Web Programming", "R507", 3, "BB+")
+            new Course("Advance Programming", "R501", 3, "B"),
+            new Course("Database", "R502", 3, "A"),
+            new Course("Struktur Data", "R508", 3, "B"),
+            new Course("Web Programming", "R507", 3, "B+")
         );
 
         List<String> hobbies = List.of("Playing Chess", "Swimming", "Playing Games");
@@ -34,11 +34,6 @@ public class mainController {
         model.addAttribute("courses", courses);
         model.addAttribute("hobbies", hobbies);
 
-        return "ProfilHTML";
-    }
-
-    @GetMapping("/tes")
-    public String ProfilHTML() {
         return "ProfilHTML";
     }
 }
